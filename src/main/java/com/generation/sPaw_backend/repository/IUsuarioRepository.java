@@ -1,4 +1,4 @@
-package com.generation.sPaw.repository;
+package com.generation.sPaw_backend.repository;
 
-public interface IUsuarioRepository {
+public interface IGroomerService {
 }

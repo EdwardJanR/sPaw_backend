@@ -1,4 +1,4 @@
 package com.generation.sPaw_backend.controller;
 
-public class UsuarioController {
+public class ReseravaController {
 }
