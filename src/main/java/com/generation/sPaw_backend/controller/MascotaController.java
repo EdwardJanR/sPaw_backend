@@ -1,4 +1,10 @@
 package com.generation.sPaw_backend.controller;
 
-public class MascotaController {
+import com.generation.sPaw_backend.service.IMascotaService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/mascotas")
+public interface MascotaController {
 }
