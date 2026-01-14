@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MascotaService implements IMascotaService{
+public class MascotaService implements IMascotaService {
+	
 	private final IMascotaRepository mascotaRepository;
 	
 	@Autowired
@@ -18,7 +19,7 @@ public class MascotaService implements IMascotaService{
 	}
 	
 	@Override
-	public List<Mascota> obtenerTodoMascota() {
+	public List<Mascota> obtenerTodasMascotas() {
 		return mascotaRepository.findAll();
 	}
 	
@@ -28,7 +29,12 @@ public class MascotaService implements IMascotaService{
 	}
 	
 	@Override
-	public void guardarMascota(Mascota mascota) {
-		mascotaRepository.save(mascota);
+	public Mascota guardarMascota(Mascota mascota) {
+		return mascotaRepository.save(mascota);
+	}
+	
+	@Override
+	public List<Mascota> buscarPorNombre(String nombreMascota) {
+		return mascotaRepository.findByNombreMascotaContainingIgnoreCase(nombreMascota);
 	}
 }
