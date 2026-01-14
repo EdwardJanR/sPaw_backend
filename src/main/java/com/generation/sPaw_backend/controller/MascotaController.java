@@ -7,5 +7,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/mascotas")
 public interface MascotaController {
-	private final
 }
