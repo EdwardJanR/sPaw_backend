@@ -1,5 +1,4 @@
-package com.generation.sPaw.repository;
-
-public interface IMascotaRepository
-{
-}
+//package com.generation.sPaw_backend.repository;
+//
+//public interface IMascotaRepository {
+//}

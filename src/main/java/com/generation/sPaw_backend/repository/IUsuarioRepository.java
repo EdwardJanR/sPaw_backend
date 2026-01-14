@@ -1,4 +1,4 @@
-package com.generation.sPaw.repository;
-
-public interface IUsuarioRepository {
-}
+//package com.generation.sPaw_backend.repository;
+//
+//public interface IUsuarioRepository {
+//}

@@ -8,8 +8,14 @@ public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idServico;
+
+    @Column(nullable = false)
     private String nombreServicio;
+
+    @Column(nullable = false)
     private String descripcion;
+
+
     private Double precioTamPequeno;
     private Double precioTamMediano;
     private Double precioTamGrande;

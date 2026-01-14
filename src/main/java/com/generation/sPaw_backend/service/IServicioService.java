@@ -8,7 +8,5 @@ import java.util.Optional;
 public interface IServicioService {
     List<Servicio> obtenerTodos();
     Optional<Servicio> obetenerPorId(Long id);
-    void guardarServico(Servicio servicio);
-    void deleteServicio(Long id);
-    void editarServicio(Long id, Servicio servicioActualizado);
+    Servicio guardarServico(Servicio servicio);
 }

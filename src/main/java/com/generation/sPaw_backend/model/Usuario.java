@@ -1,4 +1,4 @@
-package com.generation.sPaw.model;
-
-public class Usuario {
-}
+//package com.generation.sPaw_backend.model;
+//
+//public class Usuario {
+//}
