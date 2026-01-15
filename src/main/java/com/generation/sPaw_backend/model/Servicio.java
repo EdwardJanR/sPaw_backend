@@ -3,7 +3,7 @@ package com.generation.sPaw_backend.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table (name = "servicios")
+@Table (name = "servicio")
 public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
