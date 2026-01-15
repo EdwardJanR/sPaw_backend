@@ -1,5 +1,6 @@
 package com.generation.sPaw_backend.service;
 
+import com.generation.sPaw_backend.model.Mascota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -57,4 +58,15 @@ public class UsuarioService implements IUsuarioService{
             throw new RuntimeException("Usuario no encontrado con el id: " + id);
         }
     }
+	
+	@Override
+	public Usuario agregarMascota(Long idUsuario, Mascota mascota) {
+		Usuario usuario = UsuarioRepository.findById(idUsuario)
+				                  .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+		
+		mascota.setDueno(usuario);
+		usuario.getMascotas().add(mascota);
+		
+		return UsuarioRepository.save(usuario);
+	}
 }

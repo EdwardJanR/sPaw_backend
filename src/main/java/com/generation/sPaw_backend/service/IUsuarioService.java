@@ -2,6 +2,8 @@ package com.generation.sPaw_backend.service;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.generation.sPaw_backend.model.Mascota;
 import com.generation.sPaw_backend.model.Usuario;
 
 public interface IUsuarioService {
@@ -14,4 +16,6 @@ public interface IUsuarioService {
 
     //Metodo para editar usuario
     void editarUsuario(Long id, Usuario usuarioActualizado);
+	
+	Usuario agregarMascota(Long idUsuario, Mascota mascota);
 }

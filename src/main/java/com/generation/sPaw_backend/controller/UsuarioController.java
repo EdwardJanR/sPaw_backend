@@ -1,5 +1,6 @@
 package com.generation.sPaw_backend.controller;
 
+import com.generation.sPaw_backend.model.Mascota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,5 +58,10 @@ public class UsuarioController {
         usuarioService.eliminarUsuario(id);
         return ResponseEntity.ok("Usuario eliminado con éxito");
     }
+	
+	@PostMapping("/{id}/mascotas")
+	public Usuario agregarMascota(@PathVariable Long id, @RequestBody Mascota mascota) {
+		return usuarioService.agregarMascota(id, mascota);
+	}
 
 }

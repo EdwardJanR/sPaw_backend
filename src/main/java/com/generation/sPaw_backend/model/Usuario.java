@@ -1,6 +1,9 @@
 package com.generation.sPaw_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -15,6 +18,10 @@ public class Usuario {
     private String email;
     private String password;
     private String rol;
+	
+	@OneToMany(mappedBy = "dueno", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonManagedReference //resuelve generación de ciclo infinito
+	private List<Mascota> mascotas;
 
     public Usuario() {
     }
@@ -76,5 +83,12 @@ public class Usuario {
     public void setRol(String rol) {
         this.rol = rol;
     }
-
+	
+	public List<Mascota> getMascotas() {
+		return mascotas;
+	}
+	
+	public void setMascotas(List<Mascota> mascotas) {
+		this.mascotas = mascotas;
+	}
 }
