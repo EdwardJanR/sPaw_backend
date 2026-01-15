@@ -1,7 +1,4 @@
-package com.generation.sPaw.repository;
-
-import com.generation.sPaw_backend.model.Groomer;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface IGroomerRepository extends JpaRepository <Groomer, Long> {
-}
+//package com.generation.sPaw_backend.repository;
+//
+//public interface IGroomerRepository {
+//}

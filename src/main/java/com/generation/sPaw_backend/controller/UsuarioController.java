@@ -1,4 +1,4 @@
-package com.generation.sPaw_backend.controller;
-
-public class UsuarioController {
-}
+//package com.generation.sPaw_backend.controller;
+//
+//public class UsuarioController {
+//}

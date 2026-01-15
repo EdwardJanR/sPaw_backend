@@ -1,5 +1,4 @@
 //package com.generation.sPaw_backend.repository;
 //
-//public interface IReservaRepository {
-//
+//public interface IUsuarioRepository {
 //}

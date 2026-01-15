@@ -1,4 +1,4 @@
-package com.generation.sPaw_backend.service;
-
-public interface IMascotaService {
-}
+//package com.generation.sPaw_backend.service;
+//
+//public interface IMascotaService {
+//}
