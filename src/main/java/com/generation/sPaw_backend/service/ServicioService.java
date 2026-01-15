@@ -2,6 +2,7 @@ package com.generation.sPaw_backend.service;
 
 
 import com.generation.sPaw_backend.model.Servicio;
+
 import com.generation.sPaw_backend.repository.IServicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,17 +28,31 @@ public class ServicioService implements IServicioService {
 
 
     @Override
-    public Optional<Servicio> obetenerPorId(Long id) {
-//        Servicio servicio = servicioRepository.findById(id)
-//                    .orElseThrow();
-//
-//        return Optional.of(servicio);
+    public Optional<Servicio> obtenerPorId(Long id) {
         return servicioRepository.findById(id);
     }
 
     @Override
     public Servicio guardarServico(Servicio servicio) {
         return servicioRepository.save(servicio);
+    }
+
+    @Override
+    public Servicio actualizarServicio(Long id, Servicio servicioActualizado) {
+        Servicio servicioBuscado = servicioRepository.findById(id).orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+
+        servicioBuscado.setNombre(servicioActualizado.getNombre());
+        servicioBuscado.setDescripcion(servicioActualizado.getDescripcion());
+        servicioBuscado.setPrecioTamPequeno(servicioActualizado.getPrecioTamPequeno());
+        servicioBuscado.setPrecioTamMediano(servicioActualizado.getPrecioTamPequeno());
+        servicioBuscado.setPrecioTamGrande(servicioActualizado.getPrecioTamGrande());
+
+        return servicioRepository.save(servicioBuscado);
+    }
+
+    @Override
+    public void eliminarServicio(Long id) {
+        servicioRepository.deleteById(id);
     }
 
 }

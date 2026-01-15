@@ -1,6 +1,7 @@
 package com.generation.sPaw_backend.service;
 
 import com.generation.sPaw_backend.model.Mascota;
+import com.generation.sPaw_backend.model.Rol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -49,7 +50,7 @@ public class UsuarioService implements IUsuarioService{
             usuarioExistente.setApellido(usuarioActualizado.getApellido());
             usuarioExistente.setTelefono(usuarioActualizado.getTelefono());
             usuarioExistente.setEmail(usuarioActualizado.getEmail());
-            usuarioExistente.setPassword(usuarioActualizado.getPassword());
+            usuarioExistente.setPasswordUsuario(usuarioActualizado.getPasswordUsuario());
             usuarioExistente.setRol(usuarioActualizado.getRol());
 
             // Guardar el usuario actualizado
@@ -64,9 +65,14 @@ public class UsuarioService implements IUsuarioService{
 		Usuario usuario = UsuarioRepository.findById(idUsuario)
 				                  .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 		
-		mascota.setDueno(usuario);
+		mascota.setUsuario(usuario);
 		usuario.getMascotas().add(mascota);
 		
 		return UsuarioRepository.save(usuario);
 	}
+
+    @Override
+    public List<Usuario> obtenerPorRol(String rol) {
+        return UsuarioRepository.findByRol(Rol.valueOf(rol));
+    }
 }

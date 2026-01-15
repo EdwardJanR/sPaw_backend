@@ -1,33 +1,50 @@
 package com.generation.sPaw_backend.model;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "Groomer")
+@Table(name = "groomer")
 public class Groomer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idGroomer")
-    private Long id;
+    private Long idGroomer;
 
-    @Column(length = 50, nullable = false)
+    @Column(name = "nombre", length = 50)
     private String nombre;
 
-    @Column(length = 50, nullable = false)
+    @Column(name = "apellido", length = 50)
     private String apellido;
 
-    @Column(length = 15)
+    @Column(name = "telefono", length = 15)
     private String telefono;
 
-    @Column(length = 100, unique = true)
+    @Column(name = "email", length = 100)
     private String email;
 
+    @OneToMany(mappedBy = "groomer", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Reserva> reservas;
 
+    public Groomer() {}
+
+    public Groomer(String nombre, String apellido, String telefono, String email) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.email = email;
+    }
+
+    // Getters y Setters
     public Long getIdGroomer() {
-        return id;
+        return idGroomer;
     }
 
     public void setIdGroomer(Long idGroomer) {
-        this.id = idGroomer;
+        this.idGroomer = idGroomer;
     }
 
     public String getNombre() {
@@ -62,6 +79,11 @@ public class Groomer {
         this.email = email;
     }
 
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
+    }
 }
-
-

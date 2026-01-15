@@ -1,40 +1,49 @@
 package com.generation.sPaw_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
-
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "idUsuario")
+    private Long idUsuario;
+
+    @Column(name = "nombre", length = 50, nullable = false)
     private String nombre;
+
+    @Column(name = "apellido", length = 50, nullable = false)
     private String apellido;
+
+    @Column(name = "telefono", length = 15, nullable = false)
     private String telefono;
+
+    @Column(name = "email", length = 100, nullable = false)
     private String email;
-    private String password;
-    private String rol;
 
-    public Usuario() {
+    @Column(name = "passwordUsuario", length = 25, nullable = false)
+    private String passwordUsuario;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rol", nullable = false)
+    private Rol rol;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Mascota> mascotas;
+
+    public Usuario() {}
+
+    // Getters y Setters
+    public Long getIdUsuario() {
+        return idUsuario;
     }
 
-    public Usuario(Long id, String nombre, String apellido, String telefono, String email, String password, String rol) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
-        this.email = email;
-        this.password = password;
-        this.rol = rol;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNombre() {
@@ -47,5 +56,49 @@ public class Usuario {
 
     public String getApellido() {
         return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPasswordUsuario() {
+        return passwordUsuario;
+    }
+
+    public void setPasswordUsuario(String passwordUsuario) {
+        this.passwordUsuario = passwordUsuario;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public List<Mascota> getMascotas() {
+        return mascotas;
+    }
+
+    public void setMascotas(List<Mascota> mascotas) {
+        this.mascotas = mascotas;
     }
 }

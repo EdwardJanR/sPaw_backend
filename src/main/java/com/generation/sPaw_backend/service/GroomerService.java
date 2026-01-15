@@ -32,6 +32,18 @@ public class GroomerService implements IGroomerService {
 
     }
 
+    @Override
+    public Groomer actualizarGroomer(Long id, Groomer groomerActualizado) {
+        Groomer groomerBuscado = groomerRepository.findById(id).orElseThrow(() -> new RuntimeException("Gromer no encontrado"));
+
+        groomerBuscado.setNombre(groomerActualizado.getNombre());
+        groomerBuscado.setApellido(groomerActualizado.getApellido());
+        groomerBuscado.setTelefono(groomerActualizado.getTelefono());
+        groomerBuscado.setEmail(groomerActualizado.getEmail());
+
+        return groomerRepository.save(groomerBuscado);
+    }
+
     public void eliminar(Long id) {
         groomerRepository.deleteById(id);
     }

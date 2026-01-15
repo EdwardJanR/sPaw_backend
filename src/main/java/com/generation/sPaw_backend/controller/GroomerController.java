@@ -18,10 +18,6 @@ public class GroomerController {
         this.groomerService = groomerService;
     }
 
-    @PostMapping
-    public ResponseEntity<Groomer> crear(@RequestBody Groomer groomer) {
-        return ResponseEntity.ok(groomerService.guardar(groomer));
-    }
 
     @GetMapping
     public ResponseEntity<List<Groomer>> listar() {
@@ -33,6 +29,11 @@ public class GroomerController {
         return groomerService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<Groomer> crear(@RequestBody Groomer groomer) {
+        return ResponseEntity.ok(groomerService.guardar(groomer));
     }
 
     @PutMapping("/{id}")

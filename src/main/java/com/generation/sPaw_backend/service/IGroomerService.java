@@ -9,6 +9,6 @@ public interface IGroomerService {
     List<Groomer> listar();
     Optional<Groomer> buscarPorId(Long id);
     Groomer guardar(Groomer groomer);
-
+    Groomer actualizarGroomer(Long id, Groomer groomerActualizado);
     void eliminar(Long id);
 }

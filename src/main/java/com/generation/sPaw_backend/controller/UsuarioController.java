@@ -42,7 +42,7 @@ public class UsuarioController {
                     p.setApellido(usuario.getApellido());
                     p.setTelefono(usuario.getTelefono());
                     p.setEmail(usuario.getEmail());
-                    p.setPassword(usuario.getPassword());
+                    p.setPasswordUsuario(usuario.getPasswordUsuario());
                     p.setRol(usuario.getRol());
                     return p;
                 })
