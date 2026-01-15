@@ -1,12 +1,34 @@
 package com.generation.sPaw_backend.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.generation.sPaw_backend.model.Servicio;
+import com.generation.sPaw_backend.service.IServicioService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/servicios")
+@RequestMapping("/servicio")
 public class ServicioController {
 
+    private final IServicioService servicioService;
 
+    public ServicioController(IServicioService servicioService) {
+        this.servicioService = servicioService;
+    }
+
+    @GetMapping
+    public List<Servicio> listaServicios() {
+        return servicioService.obtenerTodos();
+    }
+
+    @PostMapping("/crear")
+    public Servicio crearServicio(@RequestBody Servicio servicio) {
+        return servicioService.guardarServico(servicio);
+    }
+
+    @GetMapping("/{id}")
+    public Servicio obtenerServicio(@PathVariable Long id) {
+        return servicioService.obetenerPorId(id).orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+    }
 
 }
