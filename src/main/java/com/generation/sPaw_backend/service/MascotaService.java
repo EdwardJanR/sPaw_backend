@@ -46,10 +46,11 @@ public class MascotaService implements IMascotaService {
     }
 
     @Override
-    public Mascota actualizarMascota(Long id, Mascota mascotaActualizada) {
-        Mascota mascotaBuscada = mascotaRepository.findById(id).orElseThrow(() -> new RuntimeException("Mascota no enctrada con el id: " + id ));
+    public Mascota actualizarMascota(Long idMascota, Mascota mascotaActualizada) {
+        Mascota mascotaBuscada = mascotaRepository.findById(idMascota)
+                .orElseThrow(() -> new RuntimeException("Mascota no encontrada con el id: " + idMascota));
+
         mascotaBuscada.setNombreMascota(mascotaActualizada.getNombreMascota());
-        mascotaBuscada.setUsuario(mascotaActualizada.getUsuario());
         return mascotaRepository.save(mascotaBuscada);
     }
 

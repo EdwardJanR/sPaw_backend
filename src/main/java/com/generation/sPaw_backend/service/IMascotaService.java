@@ -10,6 +10,6 @@ public interface IMascotaService {
     Mascota guardarMascota(Mascota mascota);
     void eliminarMascota(Long id);
     List<Mascota> obtenerPorUsuario(Long idUsuario);
-    Mascota actualizarMascota(Long id, Mascota mascotaActualizada);
+    Mascota actualizarMascota(Long idMascota, Mascota mascotaActualizada);
     Mascota asignarUsuario(Long idMascota, Long idUsuario);
 }
