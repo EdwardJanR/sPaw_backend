@@ -1,6 +1,7 @@
 package com.generation.sPaw_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,22 +24,28 @@ public class Reserva {
     @Column(name = "horaFinal", nullable = false)
     private LocalTime horaFinal;
 
-    @ManyToOne
+    // @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idGroomer", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_GROOMER"))
-    @JsonBackReference
+    // @JsonBackReference
+    @JsonIgnoreProperties("reservas")
     private Groomer groomer;
 
-    @ManyToOne
+    // @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idServicio", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_SERVICIO"))
-    @JsonBackReference
+    // @JsonBackReference
+    @JsonIgnoreProperties("reservas")
     private Servicio servicio;
 
-    @ManyToOne
+    // @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idMascota", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_MASCOTA"))
-    @JsonBackReference
+    // @JsonBackReference
+    @JsonIgnoreProperties({"reservas", "usuario"})
     private Mascota mascota;
 
     public Reserva() {}

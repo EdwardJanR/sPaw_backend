@@ -1,7 +1,10 @@
 package com.generation.sPaw_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,9 +34,10 @@ public class Usuario {
     @Column(name = "rol", nullable = false)
     private Rol rol;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Mascota> mascotas;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    // @JsonManagedReference
+    @JsonIgnoreProperties("usuario")
+    private List<Mascota> mascotas = new ArrayList<>();
 
     public Usuario() {}
 

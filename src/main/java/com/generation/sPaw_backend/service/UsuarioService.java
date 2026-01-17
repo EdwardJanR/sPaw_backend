@@ -2,6 +2,7 @@ package com.generation.sPaw_backend.service;
 
 import com.generation.sPaw_backend.model.Mascota;
 import com.generation.sPaw_backend.model.Rol;
+import com.generation.sPaw_backend.repository.IMascotaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -13,11 +14,13 @@ import com.generation.sPaw_backend.repository.IUsuarioRepository;
 public class UsuarioService implements IUsuarioService{
 
     private final IUsuarioRepository UsuarioRepository;
+    private final IMascotaRepository mascotaRepository;
 
-    @Autowired
-    public UsuarioService(IUsuarioRepository UsuarioRepository) {
-        this.UsuarioRepository = UsuarioRepository;
+    public UsuarioService(IUsuarioRepository usuarioRepository, IMascotaRepository mascotaRepository) {
+        UsuarioRepository = usuarioRepository;
+        this.mascotaRepository = mascotaRepository;
     }
+
 
     @Override
     public List<Usuario> obtenerTodos() {
@@ -70,6 +73,15 @@ public class UsuarioService implements IUsuarioService{
 		
 		return UsuarioRepository.save(usuario);
 	}
+
+    @Override
+    public void actualizarMascota(Long id, Mascota mascotaActualizada) {
+
+        Mascota mascotaBuscada = mascotaRepository.findById(id).orElseThrow(() -> new RuntimeException("Mascota no enctrada con el id: " + id ));
+        mascotaBuscada.setNombreMascota(mascotaActualizada.getNombreMascota());
+        mascotaBuscada.setUsuario(mascotaActualizada.getUsuario());
+        mascotaRepository.save(mascotaBuscada);
+    }
 
     @Override
     public List<Usuario> obtenerPorRol(String rol) {

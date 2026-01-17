@@ -31,7 +31,7 @@ public class GroomerController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/crear")
     public ResponseEntity<Groomer> crear(@RequestBody Groomer groomer) {
         return ResponseEntity.ok(groomerService.guardar(groomer));
     }
