@@ -42,6 +42,7 @@ public class MascotaController {
                 .body(mascotaService.guardarMascota(mascota));
     }
 
+    /*
     @PutMapping("/{id}")
     public ResponseEntity<Mascota> actualizar(@PathVariable Long id, @RequestBody Mascota mascota) {
         try {
@@ -51,7 +52,8 @@ public class MascotaController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    */
+    /*
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         try {
@@ -60,5 +62,5 @@ public class MascotaController {
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 }

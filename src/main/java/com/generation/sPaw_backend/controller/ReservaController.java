@@ -1,3 +1,4 @@
+
 package com.generation.sPaw_backend.controller;
 
 import com.generation.sPaw_backend.model.Reserva;
@@ -53,7 +54,7 @@ public class ReservaController {
         return ResponseEntity.ok(reservaService.obtenerPorUsuario(usuarioId));
     }
 
-    @PostMapping("/crear")
+    @PostMapping
     public ResponseEntity<Reserva> crear(@RequestBody Reserva reserva) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)

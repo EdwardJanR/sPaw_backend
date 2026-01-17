@@ -36,7 +36,7 @@ public class GroomerController {
         return ResponseEntity.ok(groomerService.guardar(groomer));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<Groomer> actualizar(@PathVariable Long id, @RequestBody Groomer groomer) {
         return groomerService.buscarPorId(id)
                 .map(g -> {
@@ -51,7 +51,7 @@ public class GroomerController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("eliminar/{id}")
     public ResponseEntity<Object> eliminar(@PathVariable Long id) {
         return groomerService.buscarPorId(id)
                 .map(g -> {

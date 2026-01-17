@@ -1,6 +1,8 @@
 package com.generation.sPaw_backend.controller;
 
 import com.generation.sPaw_backend.model.Mascota;
+import com.generation.sPaw_backend.model.Servicio;
+import com.generation.sPaw_backend.service.MascotaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +13,13 @@ import com.generation.sPaw_backend.service.UsuarioService;
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
-    private  final UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
+    private final MascotaService mascotaService;
+
     @Autowired
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, MascotaService mascotaService) {
         this.usuarioService = usuarioService;
+        this.mascotaService = mascotaService;
     }
 
     @GetMapping
@@ -34,21 +39,14 @@ public class UsuarioController {
         return ResponseEntity.ok("Usuario publicado con éxito");
     }
 
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
-        Usuario actualizado = usuarioService.obtenerPorId(id)
-                .map(p -> {
-                    p.setNombre(usuario.getNombre());
-                    p.setApellido(usuario.getApellido());
-                    p.setTelefono(usuario.getTelefono());
-                    p.setEmail(usuario.getEmail());
-                    p.setPasswordUsuario(usuario.getPasswordUsuario());
-                    p.setRol(usuario.getRol());
-                    return p;
-                })
-                .map(usuarioService::guardarUsuario)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        return ResponseEntity.ok(actualizado);
+    @PutMapping("/{id}/actualizar")
+    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        try {
+            usuarioService.actualizarUsuario(id, usuario);
+            return ResponseEntity.ok(usuario);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/eliminar/{id}")
@@ -58,10 +56,34 @@ public class UsuarioController {
         usuarioService.eliminarUsuario(id);
         return ResponseEntity.ok("Usuario eliminado con éxito");
     }
-	
-	@PostMapping("/{id}/mascotas")
-	public Usuario agregarMascota(@PathVariable Long id, @RequestBody Mascota mascota) {
-		return usuarioService.agregarMascota(id, mascota);
-	}
+
+    @PostMapping("/{id}/mascotas")
+    public Usuario agregarMascota(@PathVariable Long id, @RequestBody Mascota mascota) {
+        return usuarioService.agregarMascota(id, mascota);
+    }
+
+    @PutMapping("mascotas/{idMascota}")
+    public ResponseEntity<Mascota> actualizarMascota(
+            @PathVariable Long idMascota,
+            @RequestBody Mascota mascota) {
+        try {
+            Mascota mascotaActualizada = mascotaService.actualizarMascota(idMascota, mascota);
+            return ResponseEntity.ok(mascotaActualizada);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("mascotas/eliminar/{id}")
+    public ResponseEntity<Void> eliminarMascota(@PathVariable Long id) {
+        try {
+            mascotaService.eliminarMascota(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 
 }

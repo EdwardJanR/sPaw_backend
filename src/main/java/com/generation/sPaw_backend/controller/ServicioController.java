@@ -33,7 +33,7 @@ public class ServicioController {
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<Servicio> actualizar(@PathVariable Long id, @RequestBody Servicio servicio) {
         try {
             // Asumiendo que agregas un método actualizarServicio en el servicio
