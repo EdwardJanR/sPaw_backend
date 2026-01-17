@@ -1,8 +1,11 @@
 package com.generation.sPaw_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,14 +20,17 @@ public class Mascota {
     @Column(name = "nombreMascota", length = 50)
     private String nombreMascota;
 
-    @ManyToOne
+    // @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idUsuario", foreignKey = @ForeignKey(name = "FK_MASCOTA_USUARIO"))
-    @JsonBackReference
+    // @JsonBackReference
+    @JsonIgnoreProperties({"mascotas", "passwordUsuario"})
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Reserva> reservas;
+    @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL, orphanRemoval = true)
+    // @JsonManagedReference
+    @JsonIgnoreProperties("mascota")
+    private List<Reserva> reservas = new ArrayList<>();
 
     public Mascota() {}
 
