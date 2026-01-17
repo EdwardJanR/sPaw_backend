@@ -19,11 +19,11 @@ public class Mascota {
 
     @ManyToOne
     @JoinColumn(name = "idUsuario", foreignKey = @ForeignKey(name = "FK_MASCOTA_USUARIO"))
-    @JsonBackReference
+    @JsonBackReference("mascota-usuario")
     private Usuario usuario;
 
     @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("mascota-reserva")
     private List<Reserva> reservas;
 
     public Mascota() {}

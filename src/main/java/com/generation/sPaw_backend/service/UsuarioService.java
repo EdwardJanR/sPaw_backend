@@ -40,7 +40,7 @@ public class UsuarioService implements IUsuarioService{
     }
 
     @Override
-    public void editarUsuario(Long id, Usuario usuarioActualizado) {
+    public void actualizarUsuario(Long id, Usuario usuarioActualizado) {
         //Saber si existe
         Usuario usuarioExistente = UsuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con el id: " + id));
 

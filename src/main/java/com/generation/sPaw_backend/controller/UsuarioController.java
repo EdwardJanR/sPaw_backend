@@ -1,6 +1,7 @@
 package com.generation.sPaw_backend.controller;
 
 import com.generation.sPaw_backend.model.Mascota;
+import com.generation.sPaw_backend.model.Servicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,21 +35,14 @@ public class UsuarioController {
         return ResponseEntity.ok("Usuario publicado con éxito");
     }
 
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
-        Usuario actualizado = usuarioService.obtenerPorId(id)
-                .map(p -> {
-                    p.setNombre(usuario.getNombre());
-                    p.setApellido(usuario.getApellido());
-                    p.setTelefono(usuario.getTelefono());
-                    p.setEmail(usuario.getEmail());
-                    p.setPasswordUsuario(usuario.getPasswordUsuario());
-                    p.setRol(usuario.getRol());
-                    return p;
-                })
-                .map(usuarioService::guardarUsuario)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        return ResponseEntity.ok(actualizado);
+    @PutMapping("/{id}/actualizar")
+    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        try {
+            usuarioService.actualizarUsuario(id, usuario);
+            return ResponseEntity.ok(usuario);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/eliminar/{id}")

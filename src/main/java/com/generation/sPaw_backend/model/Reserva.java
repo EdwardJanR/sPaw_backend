@@ -26,19 +26,20 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "idGroomer", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_GROOMER"))
-    @JsonBackReference
+    @JsonBackReference("reserva-groomer")
     private Groomer groomer;
+
 
     @ManyToOne
     @JoinColumn(name = "idServicio", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_SERVICIO"))
-    @JsonBackReference
+    @JsonBackReference("reserva-servicio")
     private Servicio servicio;
 
     @ManyToOne
     @JoinColumn(name = "idMascota", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_MASCOTA"))
-    @JsonBackReference
+    @JsonBackReference("mascota-reserva")
     private Mascota mascota;
 
     public Reserva() {}

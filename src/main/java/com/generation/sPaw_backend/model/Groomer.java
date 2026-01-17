@@ -26,7 +26,7 @@ public class Groomer {
     private String email;
 
     @OneToMany(mappedBy = "groomer", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("reserva-groomer")
     private List<Reserva> reservas;
 
     public Groomer() {}

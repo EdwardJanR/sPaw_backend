@@ -13,10 +13,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/reservas")
 @CrossOrigin("*")
-public class ReseravaController {
+public class ReservaController {
     private final IReservaService reservaService;
 
-    public ReseravaController(IReservaService reservaService) {
+    public ReservaController(IReservaService reservaService) {
         this.reservaService = reservaService;
     }
 

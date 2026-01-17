@@ -32,7 +32,7 @@ public class Usuario {
     private Rol rol;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("mascota-usuario")
     private List<Mascota> mascotas;
 
     public Usuario() {}
