@@ -530,15 +530,24 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"mariap\",\n    \"apellido\": \"Pérez\",\n    \"telefono\": \"+56912345678\",\n    \"email\": \"mariap.perez@email.com\",\n    \"passwordUsuario\": \"miContrasenaSegura123\",\n    \"rol\": \"Cliente\",\n    \"mascotas\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:8080/auth/register",
+					"raw": "localhost:8080/auth/registro",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"auth",
-						"register"
+						"registro"
 					]
 				}
 			},
@@ -553,6 +562,15 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"mariap.perez@email.com\",\n    \"passwordUsuario\" : \"miContrasenaSegura123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "localhost:8080/auth/loginConDTO",
 					"host": [
