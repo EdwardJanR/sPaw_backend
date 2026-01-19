@@ -26,25 +26,27 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "idGroomer", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_GROOMER"))
-    @JsonBackReference
+    @JsonBackReference(value = "groomer-reserva")
     private Groomer groomer;
 
     @ManyToOne
     @JoinColumn(name = "idServicio", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_SERVICIO"))
-    @JsonBackReference
+    @JsonBackReference(value = "servicio-reserva")
     private Servicio servicio;
 
     @ManyToOne
     @JoinColumn(name = "idMascota", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_MASCOTA"))
-    @JsonBackReference
+    @JsonBackReference(value = "mascota-reserva")
     private Mascota mascota;
 
+    // Constructores
     public Reserva() {}
 
-    public Reserva(LocalDate fecha, LocalTime horaInicio, LocalTime horaFinal,
+    public Reserva(Long idReserva, LocalDate fecha, LocalTime horaInicio, LocalTime horaFinal,
                    Groomer groomer, Servicio servicio, Mascota mascota) {
+        this.idReserva = idReserva;
         this.fecha = fecha;
         this.horaInicio = horaInicio;
         this.horaFinal = horaFinal;
