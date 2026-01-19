@@ -641,6 +641,18 @@
 			"response": []
 		},
 		{
+			"name": "loginKeyAdmin",
+			"id": "51325926-350d95c9-ec00-4de6-a552-d7a64e3b0045",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
 			"name": "loginKey",
 			"id": "51325926-f021f5cb-e598-4f39-a0bf-e73c02508f5e",
 			"protocolProfileBehavior": {
@@ -973,18 +985,6 @@
 						"1"
 					]
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "loginKeyAdmin",
-			"id": "51325926-350d95c9-ec00-4de6-a552-d7a64e3b0045",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": []
 			},
 			"response": []
 		}
