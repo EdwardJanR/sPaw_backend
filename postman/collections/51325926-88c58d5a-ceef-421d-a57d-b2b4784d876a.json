@@ -554,6 +554,29 @@
 			"response": []
 		},
 		{
+			"name": "registrarAdministrador",
+			"id": "51325926-2455fe96-4d80-455b-8a17-4f399c44aaae",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/usuarios/crear",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"crear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "LoginDTo",
 			"id": "51325926-21ab758c-28a4-45a5-8bdd-1b7537cfcf16",
 			"protocolProfileBehavior": {
@@ -916,29 +939,6 @@
 						"reservas",
 						"eliminar",
 						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "registrarAdministrador",
-			"id": "51325926-2455fe96-4d80-455b-8a17-4f399c44aaae",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/usuarios/crear",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"usuarios",
-						"crear"
 					]
 				}
 			},
