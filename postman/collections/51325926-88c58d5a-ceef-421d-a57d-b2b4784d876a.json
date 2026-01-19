@@ -943,6 +943,18 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "loginDTOAdmin",
+			"id": "51325926-c755018c-06c7-489e-bd09-3ebf17cb757b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	],
 	"event": [
