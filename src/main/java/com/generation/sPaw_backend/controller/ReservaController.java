@@ -78,7 +78,6 @@ public class ReservaController {
     @DeleteMapping("eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
-            // Obtener la reserva primero para validaciones si son necesarias
             Reserva reserva = reservaService.obtenerPorId(id)
                     .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
