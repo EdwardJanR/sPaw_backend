@@ -1,10 +1,7 @@
 package com.generation.sPaw_backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,10 +25,9 @@ public class Groomer {
     @Column(name = "email", length = 100)
     private String email;
 
-    @OneToMany(mappedBy = "groomer", cascade = CascadeType.ALL, orphanRemoval = true)
-    // @JsonManagedReference
-    @JsonIgnoreProperties("groomer")
-    private List<Reserva> reservas = new ArrayList<>();
+    @OneToMany(mappedBy = "groomer", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonManagedReference("reserva-groomer")
+    private List<Reserva> reservas;
 
     public Groomer() {}
 

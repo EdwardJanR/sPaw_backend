@@ -1,3 +1,4 @@
+
 package com.generation.sPaw_backend.controller;
 
 import com.generation.sPaw_backend.model.Reserva;
@@ -63,23 +64,28 @@ public class ReservaController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Reserva> actualizar(@PathVariable Long id, @RequestBody Reserva reserva) {
+    @PutMapping("actualizar/{id}")
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Reserva reserva) {
         try {
-            reservaService.actualizarReserva(id, reserva);
-            return ResponseEntity.ok(reserva);
+            Reserva reservaActualizada = reservaService.actualizarReserva(id, reserva);
+            return ResponseEntity.ok(reservaActualizada);
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Fallo actualización, error: " + e.getMessage());
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    @DeleteMapping("eliminar/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
+            Reserva reserva = reservaService.obtenerPorId(id)
+                    .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
             reservaService.eliminarReserva(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok("La reserva fue eliminada con exito");
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No se pudo eliminar, error: " + e.getMessage());
         }
     }
 

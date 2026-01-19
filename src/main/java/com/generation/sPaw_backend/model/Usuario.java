@@ -1,10 +1,7 @@
 package com.generation.sPaw_backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,12 +31,22 @@ public class Usuario {
     @Column(name = "rol", nullable = false)
     private Rol rol;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    // @JsonManagedReference
-    @JsonIgnoreProperties("usuario")
-    private List<Mascota> mascotas = new ArrayList<>();
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference("mascota-usuario")
+    private List<Mascota> mascotas;
 
     public Usuario() {}
+
+    public Usuario(Long idUsuario, String nombre, String apellido, String telefono, String email, String passwordUsuario, Rol rol, List<Mascota> mascotas) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.email = email;
+        this.passwordUsuario = passwordUsuario;
+        this.rol = rol;
+        this.mascotas = mascotas;
+    }
 
     // Getters y Setters
     public Long getIdUsuario() {

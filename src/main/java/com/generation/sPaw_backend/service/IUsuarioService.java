@@ -11,8 +11,7 @@ public interface IUsuarioService {
     Optional<Usuario> obtenerPorId(Long id);
     Usuario guardarUsuario(Usuario usuario);
     void eliminarUsuario(Long id);
-    void editarUsuario(Long id, Usuario usuarioActualizado);
-	Usuario agregarMascota(Long idUsuario, Mascota mascota);
+    void actualizarUsuario(Long id, Usuario usuarioActualizado);
+    Usuario agregarMascota(Long idUsuario, Mascota mascota);
     List<Usuario> obtenerPorRol(String rol);
-    void actualizarMascota(Long id,Mascota mascotaActualizada);
 }

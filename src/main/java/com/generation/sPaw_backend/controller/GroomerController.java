@@ -1,7 +1,9 @@
 package com.generation.sPaw_backend.controller;
 
 import com.generation.sPaw_backend.model.Groomer;
+import com.generation.sPaw_backend.model.Servicio;
 import com.generation.sPaw_backend.service.IGroomerService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,30 +38,34 @@ public class GroomerController {
         return ResponseEntity.ok(groomerService.guardar(groomer));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Groomer> actualizar(@PathVariable Long id, @RequestBody Groomer groomer) {
-        return groomerService.buscarPorId(id)
-                .map(g -> {
-
-                    g.setNombre(groomer.getNombre());
-                    g.setApellido(groomer.getApellido());
-                    g.setTelefono(groomer.getTelefono());
-                    g.setEmail(groomer.getEmail());
-                    Groomer actualizado = groomerService.guardar(g);
-                    return ResponseEntity.ok(actualizado);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Groomer groomer) {
+        try{
+            Groomer groomerActualizado = groomerService.actualizarGroomer(id, groomer);
+            return ResponseEntity.ok(groomerActualizado);
+        } catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fallo actualizacion, error: " + e.getMessage());
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> eliminar(@PathVariable Long id) {
+
+    @DeleteMapping("eliminar/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         return groomerService.buscarPorId(id)
                 .map(g -> {
+                    String nombre = g.getNombre();
+
+                    if (!g.getReservas().isEmpty()) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT)
+                                .body("No se puede eliminar, tiene reservas activas");
+                    }
+
                     groomerService.eliminar(id);
-                    return ResponseEntity.noContent().build();
+                    return ResponseEntity.ok("El groomer fue eliminado con exito");
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("El groomer no fue encontrado"));
     }
+
 }
 
 

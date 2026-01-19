@@ -44,7 +44,7 @@ public class ServicioService implements IServicioService {
         servicioBuscado.setNombre(servicioActualizado.getNombre());
         servicioBuscado.setDescripcion(servicioActualizado.getDescripcion());
         servicioBuscado.setPrecioTamPequeno(servicioActualizado.getPrecioTamPequeno());
-        servicioBuscado.setPrecioTamMediano(servicioActualizado.getPrecioTamPequeno());
+        servicioBuscado.setPrecioTamMediano(servicioActualizado.getPrecioTamMediano());
         servicioBuscado.setPrecioTamGrande(servicioActualizado.getPrecioTamGrande());
 
         return servicioRepository.save(servicioBuscado);
