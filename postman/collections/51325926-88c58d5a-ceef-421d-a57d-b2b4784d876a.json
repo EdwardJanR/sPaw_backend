@@ -575,7 +575,33 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpYXAucGVyZXpAZW1haWwuY29tIiwiaWF0IjoxNzY4ODUxNTc1LCJleHAiOjE3Njg4ODc1NzV9.l3SVgS1Y51rKDAttPiOZLys6HqbC7njhr7B9SSwyVnM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"mariap.perez@email.com\",\n    \"passwordUsuario\" : \"miContrasenaSegura123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/auth/resource",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"resource"
+					]
+				}
 			},
 			"response": []
 		},
