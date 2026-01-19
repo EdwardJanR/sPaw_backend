@@ -818,6 +818,18 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "registrarUsuario",
+			"id": "51325926-4f75e5db-17d8-43bb-81e1-205f3310a3e2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	],
 	"event": [
