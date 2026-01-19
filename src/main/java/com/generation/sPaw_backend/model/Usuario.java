@@ -32,10 +32,21 @@ public class Usuario {
     private Rol rol;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("mascota-usuario")
     private List<Mascota> mascotas;
 
     public Usuario() {}
+
+    public Usuario(Long idUsuario, String nombre, String apellido, String telefono, String email, String passwordUsuario, Rol rol, List<Mascota> mascotas) {
+        this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.email = email;
+        this.passwordUsuario = passwordUsuario;
+        this.rol = rol;
+        this.mascotas = mascotas;
+    }
 
     // Getters y Setters
     public Long getIdUsuario() {

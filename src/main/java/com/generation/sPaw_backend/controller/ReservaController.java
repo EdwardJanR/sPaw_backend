@@ -1,3 +1,4 @@
+
 package com.generation.sPaw_backend.controller;
 
 import com.generation.sPaw_backend.model.Reserva;
@@ -13,10 +14,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/reservas")
 @CrossOrigin("*")
-public class ReseravaController {
+public class ReservaController {
     private final IReservaService reservaService;
 
-    public ReseravaController(IReservaService reservaService) {
+    public ReservaController(IReservaService reservaService) {
         this.reservaService = reservaService;
     }
 
@@ -53,7 +54,7 @@ public class ReseravaController {
         return ResponseEntity.ok(reservaService.obtenerPorUsuario(usuarioId));
     }
 
-    @PostMapping
+    @PostMapping("/crear")
     public ResponseEntity<Reserva> crear(@RequestBody Reserva reserva) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED)
@@ -63,23 +64,29 @@ public class ReseravaController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Reserva> actualizar(@PathVariable Long id, @RequestBody Reserva reserva) {
+    @PutMapping("actualizar/{id}")
+    public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Reserva reserva) {
         try {
-            reservaService.actualizarReserva(id, reserva);
-            return ResponseEntity.ok(reserva);
+            Reserva reservaActualizada = reservaService.actualizarReserva(id, reserva);
+            return ResponseEntity.ok(reservaActualizada);
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Fallo actualización, error: " + e.getMessage());
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+    @DeleteMapping("eliminar/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
+            // Obtener la reserva primero para validaciones si son necesarias
+            Reserva reserva = reservaService.obtenerPorId(id)
+                    .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
             reservaService.eliminarReserva(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok("La reserva fue eliminada con exito");
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No se pudo eliminar, error: " + e.getMessage());
         }
     }
 

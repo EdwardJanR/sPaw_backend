@@ -40,7 +40,7 @@ public class UsuarioService implements IUsuarioService{
     }
 
     @Override
-    public void editarUsuario(Long id, Usuario usuarioActualizado) {
+    public void actualizarUsuario(Long id, Usuario usuarioActualizado) {
         //Saber si existe
         Usuario usuarioExistente = UsuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con el id: " + id));
 
@@ -59,17 +59,17 @@ public class UsuarioService implements IUsuarioService{
             throw new RuntimeException("Usuario no encontrado con el id: " + id);
         }
     }
-	
-	@Override
-	public Usuario agregarMascota(Long idUsuario, Mascota mascota) {
-		Usuario usuario = UsuarioRepository.findById(idUsuario)
-				                  .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-		
-		mascota.setUsuario(usuario);
-		usuario.getMascotas().add(mascota);
-		
-		return UsuarioRepository.save(usuario);
-	}
+
+    @Override
+    public Usuario agregarMascota(Long idUsuario, Mascota mascota) {
+        Usuario usuario = UsuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        mascota.setUsuario(usuario);
+        usuario.getMascotas().add(mascota);
+
+        return UsuarioRepository.save(usuario);
+    }
 
     @Override
     public List<Usuario> obtenerPorRol(String rol) {

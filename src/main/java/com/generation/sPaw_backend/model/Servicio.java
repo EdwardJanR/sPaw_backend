@@ -29,7 +29,7 @@ public class Servicio {
     private Double precioTamGrande;
 
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference("reserva-servicio")
     private List<Reserva> reservas;
 
     public Servicio() {}
