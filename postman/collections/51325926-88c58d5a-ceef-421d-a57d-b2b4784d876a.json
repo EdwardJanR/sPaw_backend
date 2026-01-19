@@ -522,6 +522,29 @@
 			"response": []
 		},
 		{
+			"name": "registrarUsuario",
+			"id": "51325926-4f75e5db-17d8-43bb-81e1-205f3310a3e2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "crearUsuario",
 			"id": "51325926-daeeea16-f68b-4d59-8e7f-45cc82163e87",
 			"protocolProfileBehavior": {
@@ -814,29 +837,6 @@
 						"reservas",
 						"eliminar",
 						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "registrarUsuario",
-			"id": "51325926-4f75e5db-17d8-43bb-81e1-205f3310a3e2",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "localhost:8080/auth/register",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"auth",
-						"register"
 					]
 				}
 			},
