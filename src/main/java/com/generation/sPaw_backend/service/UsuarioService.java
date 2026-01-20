@@ -3,7 +3,14 @@ package com.generation.sPaw_backend.service;
 import com.generation.sPaw_backend.model.Mascota;
 import com.generation.sPaw_backend.model.Rol;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import com.generation.sPaw_backend.model.Usuario;
@@ -17,6 +24,40 @@ public class UsuarioService implements IUsuarioService{
     @Autowired
     public UsuarioService(IUsuarioRepository UsuarioRepository) {
         this.UsuarioRepository = UsuarioRepository;
+    }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Usuario registrarUsuario(Usuario usuario) {
+        if (usuario.getNombre() == null || usuario.getApellido() == null ||
+                usuario.getEmail() == null || usuario.getTelefono() == null ||
+                usuario.getPasswordUsuario() == null || usuario.getMascotas() == null || usuario.getRol() == null) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios");
+        }
+
+        if (UsuarioRepository.findByEmail(usuario.getEmail()) != null) {
+            throw new RuntimeException("Email ya esta registrado");
+        }
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setNombre(usuario.getNombre());
+        nuevoUsuario.setApellido(usuario.getApellido());
+        nuevoUsuario.setEmail(usuario.getEmail());
+        nuevoUsuario.setPasswordUsuario(passwordEncoder.encode(usuario.getPasswordUsuario()));
+        nuevoUsuario.setTelefono(usuario.getTelefono());
+        nuevoUsuario.setMascotas(usuario.getMascotas());
+        nuevoUsuario.setRol(usuario.getRol());
+
+        return UsuarioRepository.save(nuevoUsuario);
+    }
+
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+        Usuario usuario = UsuarioRepository.findByEmail(email);
+        if (usuario == null) {
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }
+        return  new org.springframework.security.core.userdetails.User(usuario.getEmail(), usuario.getPasswordUsuario(), new ArrayList<>());
+
     }
 
     @Override

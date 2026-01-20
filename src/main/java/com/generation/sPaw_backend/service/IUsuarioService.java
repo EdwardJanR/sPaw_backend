@@ -14,4 +14,5 @@ public interface IUsuarioService {
     void actualizarUsuario(Long id, Usuario usuarioActualizado);
     Usuario agregarMascota(Long idUsuario, Mascota mascota);
     List<Usuario> obtenerPorRol(String rol);
+    Usuario registrarUsuario(Usuario usuario);
 }
