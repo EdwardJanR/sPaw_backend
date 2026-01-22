@@ -596,7 +596,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\" : \"german.cruz@email.com\",\n    \"passwordUsuario\" : \"miContrasenaSegura123\"\n}",
+					"raw": "{\n    \"email\" : \"german.cruz@email.com\",\n    \"passwordUsuario\" : \"\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
