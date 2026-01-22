@@ -1,5 +1,6 @@
 package com.generation.sPaw_backend.service;
 
+import com.generation.sPaw_backend.dto.PerfilDto;
 import com.generation.sPaw_backend.model.Mascota;
 import com.generation.sPaw_backend.model.Rol;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,11 @@ import com.generation.sPaw_backend.repository.IUsuarioRepository;
 @Service
 public class UsuarioService implements IUsuarioService{
 
-    private final IUsuarioRepository UsuarioRepository;
+    private final IUsuarioRepository usuarioRepository;
 
     @Autowired
     public UsuarioService(IUsuarioRepository UsuarioRepository) {
-        this.UsuarioRepository = UsuarioRepository;
+        this.usuarioRepository = UsuarioRepository;
     }
 
     @Autowired
@@ -32,11 +33,11 @@ public class UsuarioService implements IUsuarioService{
     public Usuario registrarUsuario(Usuario usuario) {
         if (usuario.getNombre() == null || usuario.getApellido() == null ||
                 usuario.getEmail() == null || usuario.getTelefono() == null ||
-                usuario.getPasswordUsuario() == null || usuario.getMascotas() == null || usuario.getRol() == null) {
+                usuario.getPasswordUsuario() == null || usuario.getRol() == null) {
             throw new IllegalArgumentException("Todos los campos son obligatorios");
         }
 
-        if (UsuarioRepository.findByEmail(usuario.getEmail()) != null) {
+        if (usuarioRepository.findByEmail(usuario.getEmail()) != null) {
             throw new RuntimeException("Email ya esta registrado");
         }
         Usuario nuevoUsuario = new Usuario();
@@ -45,14 +46,14 @@ public class UsuarioService implements IUsuarioService{
         nuevoUsuario.setEmail(usuario.getEmail());
         nuevoUsuario.setPasswordUsuario(passwordEncoder.encode(usuario.getPasswordUsuario()));
         nuevoUsuario.setTelefono(usuario.getTelefono());
-        nuevoUsuario.setMascotas(usuario.getMascotas());
+        nuevoUsuario.setMascotas(new ArrayList<>());
         nuevoUsuario.setRol(usuario.getRol());
 
-        return UsuarioRepository.save(nuevoUsuario);
+        return usuarioRepository.save(nuevoUsuario);
     }
 
     public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
-        Usuario usuario = UsuarioRepository.findByEmail(email);
+        Usuario usuario = usuarioRepository.findByEmail(email);
         if (usuario == null) {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
@@ -62,28 +63,42 @@ public class UsuarioService implements IUsuarioService{
 
     @Override
     public List<Usuario> obtenerTodos() {
-        return UsuarioRepository.findAll();
+        return usuarioRepository.findAll();
     }
 
     @Override
     public Optional<Usuario> obtenerPorId(Long id) {
-        return UsuarioRepository.findById(id);
+        return usuarioRepository.findById(id);
+    }
+
+    @Override
+    public Usuario obtenerPerfilPorEmail(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if (usuario == null) {
+            throw new UsernameNotFoundException("Usuario no encontrado con email: " + email);
+        }
+
+        return usuario;
     }
 
     @Override
     public Usuario guardarUsuario(Usuario usuario) {
-        return UsuarioRepository.save(usuario);
+        if(usuario.getRol() == null){
+            usuario.setRol(Rol.Cliente);
+        }
+        return usuarioRepository.save(usuario);
     }
 
     @Override
     public void eliminarUsuario(Long id) {
-        UsuarioRepository.deleteById(id);
+        usuarioRepository.deleteById(id);
     }
 
     @Override
     public void actualizarUsuario(Long id, Usuario usuarioActualizado) {
         //Saber si existe
-        Usuario usuarioExistente = UsuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con el id: " + id));
+        Usuario usuarioExistente = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con el id: " + id));
 
         //Actualizar los campos de usuario existente
         if (usuarioExistente != null){
@@ -95,7 +110,7 @@ public class UsuarioService implements IUsuarioService{
             usuarioExistente.setRol(usuarioActualizado.getRol());
 
             // Guardar el usuario actualizado
-            UsuarioRepository.save(usuarioExistente);
+            usuarioRepository.save(usuarioExistente);
         } else {
             throw new RuntimeException("Usuario no encontrado con el id: " + id);
         }
@@ -103,17 +118,17 @@ public class UsuarioService implements IUsuarioService{
 
     @Override
     public Usuario agregarMascota(Long idUsuario, Mascota mascota) {
-        Usuario usuario = UsuarioRepository.findById(idUsuario)
+        Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         mascota.setUsuario(usuario);
         usuario.getMascotas().add(mascota);
 
-        return UsuarioRepository.save(usuario);
+        return usuarioRepository.save(usuario);
     }
 
     @Override
     public List<Usuario> obtenerPorRol(String rol) {
-        return UsuarioRepository.findByRol(Rol.valueOf(rol));
+        return usuarioRepository.findByRol(Rol.valueOf(rol));
     }
 }

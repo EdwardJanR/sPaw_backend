@@ -532,7 +532,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"nombre\": \"mariap\",\n    \"apellido\": \"Pérez\",\n    \"telefono\": \"+56912345678\",\n    \"email\": \"mariap.perez@email.com\",\n    \"passwordUsuario\": \"miContrasenaSegura123\",\n    \"rol\": \"Cliente\",\n    \"mascotas\": []\n}",
+					"raw": "{\n    \"nombre\": \"german\",\n    \"apellido\": \"cruz\",\n    \"telefono\": \"+56912345678\",\n    \"email\": \"german.cruz@email.com\",\n    \"passwordUsuario\": \"sPaw2026*\",\n    \"rol\": \"Cliente\",\n    \"mascotas\": [\n        \n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -562,15 +562,24 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"German\",\n    \"apellido\": \"Cruz\",\n    \"telefono\": \"+56912345678\",\n    \"email\": \"german.cruz@email.com\",\n    \"passwordUsuario\": \"miContrasenaSegura123\",\n    \"rol\": \"Administrador\",\n    \"mascotas\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:8080/usuarios/crear",
+					"raw": "localhost:8080/auth/registro",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"usuarios",
-						"crear"
+						"auth",
+						"registro"
 					]
 				}
 			},
@@ -587,7 +596,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\" : \"german.cruz@email.com\",\n    \"passwordUsuario\" : \"miContrasenaSegura123\"\n}",
+					"raw": "{\n    \"email\" : \"german.cruz@email.com\",\n    \"passwordUsuario\" : \"\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
