@@ -31,7 +31,7 @@ public class Usuario {
     @Column(name = "rol", nullable = false)
     private Rol rol;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference("mascota-usuario")
     private List<Mascota> mascotas;
 

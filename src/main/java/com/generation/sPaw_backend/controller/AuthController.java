@@ -6,11 +6,15 @@ import com.generation.sPaw_backend.dto.UsuarioDto;
 import com.generation.sPaw_backend.model.Usuario;
 import com.generation.sPaw_backend.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -26,29 +30,35 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/registro")
-    public ResponseEntity<String> register(@RequestBody Usuario usuario) {
-        usuarioService.registrarUsuario(usuario);
-        return ResponseEntity.ok("Usuario registrado con éxito");
+    public ResponseEntity<?> register(@RequestBody Usuario usuario) {
+        try {
+            Usuario usuarioRegistrado = usuarioService.registrarUsuario(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRegistrado);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<String> login(@RequestBody User user) {
-//        UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
-//        if (userDetails != null && passwordEncoder.matches(user.getPassword(), userDetails.getPassword())) {
-//            String token = jwtUtil.generateToken(userDetails.getUsername());
-//            return ResponseEntity.ok(token);
-//        }
-//        return ResponseEntity.status(401).body("Credenciales inválidas");
-//    }
 
     @PostMapping("/loginConDTO")
-    public ResponseEntity<String> loginConDTO(@RequestBody UsuarioDto usuarioDto) {
+    public ResponseEntity<?> loginConDTO(@RequestBody UsuarioDto usuarioDto) {
         UserDetails userDetails = usuarioService.loadUserByEmail(usuarioDto.getEmail());
         if (userDetails != null && passwordEncoder.matches(usuarioDto.getPasswordUsuario(), userDetails.getPassword())) {
             String token = jwtUtil.generateToken(userDetails.getUsername());
-            System.out.println(userDetails.getPassword());
-            System.out.println(userDetails.getUsername());
-            return ResponseEntity.ok(token);
+
+            Usuario usuario = usuarioService.obtenerPerfilPorEmail(usuarioDto.getEmail());
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+
+            Map<String, Object> usuarioData = new HashMap<>();
+            usuarioData.put("nombre", usuario.getNombre());
+            usuarioData.put("apellido", usuario.getApellido());
+            usuarioData.put("email", usuario.getEmail());
+
+            response.put("usuario", usuarioData);
+
+            return ResponseEntity.ok(response);
         }
         return ResponseEntity.status(401).body("Credenciales inválidas");
     }
