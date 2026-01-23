@@ -1,6 +1,7 @@
 package com.generation.sPaw_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -26,20 +27,20 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "idGroomer", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_GROOMER"))
-    @JsonBackReference("reserva-groomer")
+    @JsonIgnoreProperties({"reservas", "hibernateLazyInitializer", "handler"})
     private Groomer groomer;
 
 
     @ManyToOne
     @JoinColumn(name = "idServicio", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_SERVICIO"))
-    @JsonBackReference("reserva-servicio")
+    @JsonIgnoreProperties({"reservas", "hibernateLazyInitializer", "handler"})
     private Servicio servicio;
 
     @ManyToOne
     @JoinColumn(name = "idMascota", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_MASCOTA"))
-    @JsonBackReference("mascota-reserva")
+    @JsonIgnoreProperties({"reservas", "usuario","hibernateLazyInitializer", "handler"})
     private Mascota mascota;
 
     public Reserva() {}

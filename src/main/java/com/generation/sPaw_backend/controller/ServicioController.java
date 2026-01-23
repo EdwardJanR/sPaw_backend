@@ -35,7 +35,7 @@ public class ServicioController {
     }
 
 
-    @PutMapping("actualizar/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<?> actualizar(@PathVariable Long id, @RequestBody Servicio servicio) {
         try {
             Servicio servicioActualizado = servicioService.actualizarServicio(id, servicio);
@@ -45,7 +45,7 @@ public class ServicioController {
         }
     }
 
-    @DeleteMapping("eliminar/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
             Servicio servicio =  servicioService.obtenerPorId(id).orElseThrow(() -> new RuntimeException("Servicio no fue encontrado"));

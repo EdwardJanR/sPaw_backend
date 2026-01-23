@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ← CORS PRIMERO
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/registro", "/auth/loginConDTO", "/usuarios", "/servicio", "/usuarios/*/mascotas").permitAll()
+                        .requestMatchers("/auth/login", "/auth/registro", "/auth/loginConDTO", "/usuarios", "/servicio/**","/groomers/**" ,"/mascotas/**", "/reservas/**", "/usuarios/*/mascotas").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

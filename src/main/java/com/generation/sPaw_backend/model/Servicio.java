@@ -1,5 +1,6 @@
 package com.generation.sPaw_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
@@ -28,8 +29,8 @@ public class Servicio {
     @Column(name = "precioTamGrande", nullable = false)
     private Double precioTamGrande;
 
-    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL)
-    @JsonManagedReference("reserva-servicio")
+    @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Reserva> reservas;
 
     public Servicio() {}

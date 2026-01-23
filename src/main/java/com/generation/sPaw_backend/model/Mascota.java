@@ -1,6 +1,8 @@
 package com.generation.sPaw_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
@@ -17,21 +19,26 @@ public class Mascota {
     @Column(name = "nombreMascota", length = 50)
     private String nombreMascota;
 
+    @Column(name = "tamanoMascota", length = 30)
+    private String tamanoMascota;
+
     @ManyToOne
     @JoinColumn(name = "idUsuario", foreignKey = @ForeignKey(name = "FK_MASCOTA_USUARIO"))
-    @JsonBackReference("mascota-usuario")
+    @JsonIgnoreProperties({"mascotas", "passwordUsuario", "hibernateLazyInitializer", "handler"})
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL)
-    @JsonManagedReference("mascota-reserva")
+    @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Reserva> reservas;
 
     public Mascota() {}
 
-    public Mascota(String nombreMascota, Usuario usuario) {
+    public Mascota(String nombreMascota, String tamanoMascota, Usuario usuario) {
         this.nombreMascota = nombreMascota;
+        this.tamanoMascota = tamanoMascota;
         this.usuario = usuario;
     }
+
 
     // Getters y Setters
     public Long getIdMascota() {
@@ -48,6 +55,14 @@ public class Mascota {
 
     public void setNombreMascota(String nombreMascota) {
         this.nombreMascota = nombreMascota;
+    }
+
+    public String getTamanoMascota() {
+        return tamanoMascota;
+    }
+
+    public void setTamanoMascota(String tamanoMascota) {
+        this.tamanoMascota = tamanoMascota;
     }
 
     public Usuario getUsuario() {
