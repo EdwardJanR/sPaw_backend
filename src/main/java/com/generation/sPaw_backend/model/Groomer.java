@@ -1,5 +1,7 @@
 package com.generation.sPaw_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
@@ -26,7 +28,7 @@ public class Groomer {
     private String email;
 
     @OneToMany(mappedBy = "groomer", cascade = CascadeType.ALL, orphanRemoval = false)
-    @JsonManagedReference("reserva-groomer")
+    @JsonIgnore
     private List<Reserva> reservas;
 
     public Groomer() {}

@@ -1,5 +1,6 @@
 package com.generation.sPaw_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
@@ -24,15 +25,15 @@ public class Usuario {
     @Column(name = "email", length = 100, nullable = false)
     private String email;
 
-    @Column(name = "passwordUsuario", length = 25, nullable = false)
+    @Column(name = "passwordUsuario", length = 100, nullable = false)
     private String passwordUsuario;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "rol", nullable = false)
     private Rol rol;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonManagedReference("mascota-usuario")
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Mascota> mascotas;
 
     public Usuario() {}

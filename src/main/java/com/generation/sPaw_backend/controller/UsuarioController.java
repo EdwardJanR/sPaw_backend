@@ -34,6 +34,16 @@ public class UsuarioController {
                 .orElse(new Usuario());
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Usuario> obtenerPorEmail(@PathVariable String email) {
+        try {
+            Usuario usuario = usuarioService.obtenerPerfilPorEmail(email);
+            return ResponseEntity.ok(usuario);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
     @PostMapping("/crear")
     public ResponseEntity<String> guardarUsuario(@RequestBody Usuario usuario){
         usuarioService.guardarUsuario(usuario);
