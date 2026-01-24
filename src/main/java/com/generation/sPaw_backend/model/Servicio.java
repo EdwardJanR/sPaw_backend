@@ -1,11 +1,8 @@
 package com.generation.sPaw_backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-import java.util.Base64;
 import java.util.List;
 
 @Entity
@@ -32,35 +29,24 @@ public class Servicio {
     @Column(name = "precioTamGrande", nullable = false)
     private Double precioTamGrande;
 
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    @JsonIgnore
-    private byte[] imagen;
-
-    @Transient
-    @JsonProperty("imagen")
-    private String imagenBase64;
-
-    @PostLoad
-    public void convertirImagenABase64() {
-        if (this.imagen != null && this.imagen.length > 0) {
-            this.imagenBase64 = Base64.getEncoder().encodeToString(this.imagen);
-        }
-    }
+    @Column(name = "imagen", length = 500)
+    private String imagen; // ✅ Ahora guarda la URL de Cloudinary
 
     @OneToMany(mappedBy = "servicio", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Reserva> reservas;
 
+    // Constructores
     public Servicio() {}
 
     public Servicio(String nombre, String descripcion, Double precioTamPequeno,
-                    Double precioTamMediano, Double precioTamGrande) {
+                    Double precioTamMediano, Double precioTamGrande, String imagen) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioTamPequeno = precioTamPequeno;
         this.precioTamMediano = precioTamMediano;
         this.precioTamGrande = precioTamGrande;
+        this.imagen = imagen;
     }
 
     // Getters y Setters
@@ -112,32 +98,19 @@ public class Servicio {
         this.precioTamGrande = precioTamGrande;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
     public List<Reserva> getReservas() {
         return reservas;
     }
 
     public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
-    }
-
-    @JsonIgnore
-    public byte[] getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
-    }
-
-    public String getImagenBase64() {
-        // Conversión lazy: si no se ha convertido aún, hacerlo ahora
-        if (imagenBase64 == null && imagen != null && imagen.length > 0) {
-            imagenBase64 = Base64.getEncoder().encodeToString(imagen);
-        }
-        return imagenBase64;
-    }
-
-    public void setImagenBase64(String imagenBase64) {
-        this.imagenBase64 = imagenBase64;
     }
 }
