@@ -1,15 +1,10 @@
 package com.generation.sPaw_backend.service;
 
-
 import com.generation.sPaw_backend.model.Servicio;
-
 import com.generation.sPaw_backend.repository.IServicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,13 +33,8 @@ public class ServicioService implements IServicioService {
         return servicioRepository.save(servicio);
     }
 
-    @Override
-    public Servicio guardarServico(Servicio servicio, MultipartFile imagen) throws IOException {
-        if (imagen != null && !imagen.isEmpty()) {
-            servicio.setImagen(imagen.getBytes());
-        }
-        return servicioRepository.save(servicio);
-    }
+    // ✅ ELIMINADO: El método que recibía MultipartFile ya no es necesario
+    // porque ahora trabajamos directamente con URLs (String)
 
     @Override
     public Servicio actualizarServicio(Long id, Servicio servicioActualizado) {
@@ -57,8 +47,8 @@ public class ServicioService implements IServicioService {
         servicioBuscado.setPrecioTamMediano(servicioActualizado.getPrecioTamMediano());
         servicioBuscado.setPrecioTamGrande(servicioActualizado.getPrecioTamGrande());
 
-        // Solo actualizar imagen si viene
-        if (servicioActualizado.getImagen() != null) {
+        // ✅ Solo actualizar imagen si viene una nueva URL
+        if (servicioActualizado.getImagen() != null && !servicioActualizado.getImagen().isEmpty()) {
             servicioBuscado.setImagen(servicioActualizado.getImagen());
         }
 
