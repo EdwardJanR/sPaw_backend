@@ -7,7 +7,9 @@ import com.generation.sPaw_backend.repository.IServicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,6 @@ public class ServicioService implements IServicioService {
         return servicioRepository.findAll();
     }
 
-
     @Override
     public Optional<Servicio> obtenerPorId(Long id) {
         return servicioRepository.findById(id);
@@ -38,14 +39,28 @@ public class ServicioService implements IServicioService {
     }
 
     @Override
+    public Servicio guardarServico(Servicio servicio, MultipartFile imagen) throws IOException {
+        if (imagen != null && !imagen.isEmpty()) {
+            servicio.setImagen(imagen.getBytes());
+        }
+        return servicioRepository.save(servicio);
+    }
+
+    @Override
     public Servicio actualizarServicio(Long id, Servicio servicioActualizado) {
-        Servicio servicioBuscado = servicioRepository.findById(id).orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+        Servicio servicioBuscado = servicioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
 
         servicioBuscado.setNombre(servicioActualizado.getNombre());
         servicioBuscado.setDescripcion(servicioActualizado.getDescripcion());
         servicioBuscado.setPrecioTamPequeno(servicioActualizado.getPrecioTamPequeno());
         servicioBuscado.setPrecioTamMediano(servicioActualizado.getPrecioTamMediano());
         servicioBuscado.setPrecioTamGrande(servicioActualizado.getPrecioTamGrande());
+
+        // Solo actualizar imagen si viene
+        if (servicioActualizado.getImagen() != null) {
+            servicioBuscado.setImagen(servicioActualizado.getImagen());
+        }
 
         return servicioRepository.save(servicioBuscado);
     }
@@ -54,5 +69,4 @@ public class ServicioService implements IServicioService {
     public void eliminarServicio(Long id) {
         servicioRepository.deleteById(id);
     }
-
 }
