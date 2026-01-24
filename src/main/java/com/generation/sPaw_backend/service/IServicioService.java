@@ -11,7 +11,4 @@ public interface IServicioService {
     Servicio guardarServico(Servicio servicio);
     Servicio actualizarServicio(Long id, Servicio servicioActualizado);
     void eliminarServicio(Long id);
-
-    // ✅ ELIMINADO: Ya no necesitas este método sobrecargado
-    // Servicio guardarServico(Servicio servicio, MultipartFile imagen) throws IOException;
 }

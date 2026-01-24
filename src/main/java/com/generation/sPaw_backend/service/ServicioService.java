@@ -33,9 +33,6 @@ public class ServicioService implements IServicioService {
         return servicioRepository.save(servicio);
     }
 
-    // ✅ ELIMINADO: El método que recibía MultipartFile ya no es necesario
-    // porque ahora trabajamos directamente con URLs (String)
-
     @Override
     public Servicio actualizarServicio(Long id, Servicio servicioActualizado) {
         Servicio servicioBuscado = servicioRepository.findById(id)
@@ -47,7 +44,7 @@ public class ServicioService implements IServicioService {
         servicioBuscado.setPrecioTamMediano(servicioActualizado.getPrecioTamMediano());
         servicioBuscado.setPrecioTamGrande(servicioActualizado.getPrecioTamGrande());
 
-        // ✅ Solo actualizar imagen si viene una nueva URL
+        // Solo actualiza la imagen si viene una nueva URL
         if (servicioActualizado.getImagen() != null && !servicioActualizado.getImagen().isEmpty()) {
             servicioBuscado.setImagen(servicioActualizado.getImagen());
         }
