@@ -54,11 +54,13 @@ public class ReservaController {
         return ResponseEntity.ok(reservaService.obtenerPorUsuario(usuarioId));
     }
 
-    @PostMapping("/crear")
-    public ResponseEntity<Reserva> crear(@RequestBody Reserva reserva) {
+    @PostMapping("/usuario/{usuarioId}/crear")
+    public ResponseEntity<Reserva> crearParaUsuario(
+            @PathVariable Long usuarioId,
+            @RequestBody Reserva reserva) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(reservaService.guardarReserva(reserva));
+            Reserva reservaCreada = reservaService.guardarReserva(usuarioId, reserva);
+            return ResponseEntity.status(HttpStatus.CREATED).body(reservaCreada);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(null);
         }

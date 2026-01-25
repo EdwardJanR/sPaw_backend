@@ -13,7 +13,7 @@ public interface IReservaService {
     List<Reserva> obtenerPorMascota(Long idMascota);
     List<Reserva> obtenerPorGroomer(Long idGroomer);
     List<Reserva> obtenerPorUsuario(Long idUsuario);
-    Reserva guardarReserva(Reserva reserva);
+    Reserva guardarReserva(Long usuarioId, Reserva reserva);
     Reserva actualizarReserva(Long id, Reserva reservaActualizada);
     void eliminarReserva(Long id);
     Reserva asignarGroomer(Long idReserva, Long idGroomer);

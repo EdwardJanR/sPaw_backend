@@ -40,7 +40,7 @@ public class Reserva {
     @ManyToOne
     @JoinColumn(name = "idMascota", nullable = false,
             foreignKey = @ForeignKey(name = "FK_RESERVA_MASCOTA"))
-    @JsonIgnoreProperties({"reservas", "usuario","hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({"reservas", "hibernateLazyInitializer", "handler"})
     private Mascota mascota;
 
     public Reserva() {}

@@ -6,9 +6,11 @@ import com.generation.sPaw_backend.model.Reserva;
 import com.generation.sPaw_backend.model.Servicio;
 import com.generation.sPaw_backend.repository.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +30,6 @@ public class ReservaService implements IReservaService {
         this.usuarioRepository = usuarioRepository;
     }
 
-
-
     @Override
     public List<Reserva> obtenerTodas() {
         return reservaRepository.findAll();
@@ -38,6 +38,20 @@ public class ReservaService implements IReservaService {
     @Override
     public Optional<Reserva> obtenerPorId(Long id) {
         return reservaRepository.findById(id);
+    }
+
+    @Override
+    public List<Reserva> obtenerPorUsuario(Long idUsuario) {
+        List<Mascota> mascotas = mascotaRepository.findByUsuarioIdUsuario(idUsuario);
+        if (mascotas.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<Reserva> todasReservas = new ArrayList<>();
+        for (Mascota mascota : mascotas) {
+            List<Reserva> reservasMascota = reservaRepository.findByMascotaIdMascota(mascota.getIdMascota());
+            todasReservas.addAll(reservasMascota);
+        }
+        return todasReservas;
     }
 
     @Override
@@ -56,19 +70,21 @@ public class ReservaService implements IReservaService {
     }
 
     @Override
-    public List<Reserva> obtenerPorUsuario(Long idUsuario) {
-        return reservaRepository.findByMascotaUsuarioIdUsuario(idUsuario);
-    }
+    public Reserva guardarReserva(Long usuarioId, Reserva reserva) {
+        Mascota mascota = mascotaRepository.findById(reserva.getMascota().getIdMascota())
+                .orElseThrow(() -> new RuntimeException("Mascota no encontrada"));
 
-    @Override
-    public Reserva guardarReserva(Reserva reserva) {
+        if (!mascota.getUsuario().getIdUsuario().equals(usuarioId)) {
+            throw new RuntimeException("La mascota no pertenece al usuario");
+        }
         if(!verificarDisponibilidad(
                 reserva.getFecha(),
                 reserva.getHoraInicio(),
                 reserva.getHoraFinal(),
                 reserva.getGroomer().getIdGroomer())){
-            throw new RuntimeException("El groomer no tiene la disponibilidad en la hora seleccionada");
+            throw new RuntimeException("El groomer no tiene disponibilidad en la hora seleccionada");
         }
+
         return reservaRepository.save(reserva);
     }
 

@@ -24,7 +24,7 @@ public class Mascota {
 
     @ManyToOne
     @JoinColumn(name = "idUsuario", foreignKey = @ForeignKey(name = "FK_MASCOTA_USUARIO"))
-    @JsonIgnoreProperties({"mascotas", "passwordUsuario", "hibernateLazyInitializer", "handler"})
+    @JsonIgnoreProperties({"mascotas", "hibernateLazyInitializer", "handler"})
     private Usuario usuario;
 
     @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL, orphanRemoval = true)
