@@ -1,15 +1,10 @@
 package com.generation.sPaw_backend.service;
 
-
 import com.generation.sPaw_backend.model.Servicio;
-
 import com.generation.sPaw_backend.repository.IServicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,14 +34,6 @@ public class ServicioService implements IServicioService {
     }
 
     @Override
-    public Servicio guardarServico(Servicio servicio, MultipartFile imagen) throws IOException {
-        if (imagen != null && !imagen.isEmpty()) {
-            servicio.setImagen(imagen.getBytes());
-        }
-        return servicioRepository.save(servicio);
-    }
-
-    @Override
     public Servicio actualizarServicio(Long id, Servicio servicioActualizado) {
         Servicio servicioBuscado = servicioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
@@ -57,8 +44,8 @@ public class ServicioService implements IServicioService {
         servicioBuscado.setPrecioTamMediano(servicioActualizado.getPrecioTamMediano());
         servicioBuscado.setPrecioTamGrande(servicioActualizado.getPrecioTamGrande());
 
-        // Solo actualizar imagen si viene
-        if (servicioActualizado.getImagen() != null) {
+        // Solo actualiza la imagen si viene una nueva URL
+        if (servicioActualizado.getImagen() != null && !servicioActualizado.getImagen().isEmpty()) {
             servicioBuscado.setImagen(servicioActualizado.getImagen());
         }
 
